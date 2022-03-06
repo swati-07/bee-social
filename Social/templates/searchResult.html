@@ -1,0 +1,159 @@
+{% include 'base.html'%}
+{% block content%}
+<style type="text/css">
+	body{
+		overflow: auto;
+	}
+	button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+/*.h{
+	height: 300vh;
+}*/
+.red{
+	color: red;
+}
+	
+.fix {
+  position:fixed;
+  top: 0 ;
+  width:100%;
+  margin-bottom: 0%;
+  }
+.main {
+  padding: 16px;
+  margin-top: 85px;
+  height: 1500px; /* Used in this example to enable scrolling */
+  position: absolute;
+  z-index: -1;
+}
+a{
+	color: inherit;
+}
+.round{
+/*clip-path: circle();*/
+width:50px;
+  height:50px;
+  object-fit:cover;
+  border-radius:50%;
+
+
+}
+hr{
+	padding-bottom:1px;
+}
+.comments{
+	line-height: 2px;
+}
+.inputcomment{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcomments{
+		width: 90%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcommentss{
+		width: 100%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.commentbutton{
+	height:20px;
+}
+.w50{
+	width:50px;
+}
+.peach{
+	background-color: #FFD7CD;
+	border-radius: 20px;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.shown{
+    visibility: visible;
+}
+.pointer {cursor: pointer;}
+
+.right{
+	padding-left:370px; 
+}
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+.purple{
+	background-color: #D8BFD8;
+}
+.saved{
+	color: #D8BFD8;
+}
+.fa-heart{
+	cursor: pointer;
+}
+.fa-comment{
+	cursor: pointer;
+}
+.fa-share-square{
+	cursor: pointer;
+}
+.fa-envelope-open{
+	cursor: pointer;
+}
+</style>
+<div class='container-fluid fix'>
+	<div class='row pt-1'></div>
+
+	<div class='row pt-2 pb-1 warning'>
+		<div class='col-sm-3 d-flex justify-content-center'>
+			<h1><a href="{% url 'Social:index'%}"><b>Bee-Social</b></a></h1>
+		</div>
+		<div class='pl-5 col-sm-6 d-flex align-items-center'>
+			<form id='search' method="POST" action="{% url 'Social:searchresult'%}">
+				<input class='text-center'type="text" name="search" size=80 placeholder='Search for profiles, users and friends and be social :)'>
+				<button class='submit'><i class="fas fa-search fa-lg"></i></button>
+
+			</form>
+		</div>
+		<div class='col-sm-3 d-flex justify-content-end align-items-center'>
+			<a href="#popup1"><i class="fa fa-plus fa-2x pr-5" aria-hidden="true"></i></a>
+			<a href=""><i class="fas fa-comments fa-2x pr-5"></i></a>
+			<div class='dropdown'>
+				<a class='dropdown-toggle' id='dropdownMenuLink' data-toggle='dropdown' ><i class="fa fa-user fa-2x drop-down" aria-hidden="true"></i></a>
+				<div class='dropdown-menu'>
+					<a class='dropdown-item' href="{% url 'Social:profile' pk=profile.pk %}">Profile</a>
+					<a class='dropdown-item' href="{% url 'Social:savedimg' pk=profile.pk %}">Saved</a>
+					<a class='dropdown-item' href="">Chit-Chat</a>
+					<a class='dropdown-item' href="{% url 'Social:logout'%}">Log-Out</a>
+					
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<hr>
+	
+</div>
+
+{% endblock%}

@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% block content%}
+<style type="text/css">
+	body{
+		overflow: auto;
+	}
+	button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+.pointer{
+	cursor: pointer;
+}
+.fix {
+  position:fixed;
+  top: 0 ;
+  width:100%;
+  margin-bottom: 0%;
+  z-index: 2;
+  }
+  a{
+	color: inherit;
+}
+.break{
+	padding-top: 5px;
+}
+.postimage{
+	max-height:100%;
+	max-width:100%;
+	padding:7px;
+	/*margin:10px;*/
+
+}
+.main{
+		min-height: 50vh;
+		z-index: 1;
+		border-left: 1px solid grey;
+		border-right: 1px solid grey;
+		padding: 0px;
+}
+.padding-row{
+	margin-top: 85px;
+}
+.edit{
+	border: 1px solid grey;
+}
+.round{
+/*clip-path: circle();*/
+width:50px;
+  height:50px;
+  object-fit:cover;
+  border-radius:50%;
+
+
+}
+.comments{
+	line-height: 2px;
+}
+.inputcomment{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcomments{
+		width: 90%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcommentss{
+		width: 100%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.commentbutton{
+	height:20px;
+}
+.red{
+	color: red;
+}
+	a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+.purple{
+	background-color: #D8BFD8;
+}
+.saved{
+	color: #D8BFD8;
+}
+.fa-heart{
+	cursor: pointer;
+}
+.fa-comment{
+	cursor: pointer;
+}
+.fa-share-square{
+	cursor: pointer;
+}
+.fa-envelope-open{
+	cursor: pointer;
+}
+</style>
+<div class='container-fluid fix'>
+	<div class='row pt-1'></div>
+
+	<div class='row pt-2 pb-1 warning'>
+		<div class='col-sm-3 d-flex justify-content-center'>
+			<h1><a href="{% url 'Social:index'%}"><b>Bee-Social</b></a></h1>
+		</div>
+		<div class='pl-5 col-sm-6 d-flex align-items-center'>
+			<form id='search'>
+				<input class='text-center'type="text" name="search" size=80 placeholder='Search for profiles, users and friends and be social :)'>
+				<button class='submit'><i class="fas fa-search fa-lg"></i></button>
+
+			</form>
+		</div>
+		<div class='col-sm-3 d-flex justify-content-end align-items-center'>
+			<a href="#popup1"><i class="fa fa-plus fa-2x pr-5" aria-hidden="true"></i></a>
+			<a href=""><i class="fas fa-comments fa-2x pr-5"></i></a>
+			<div class='dropdown'>
+				<a class='dropdown-toggle' id='dropdownMenuLink' data-toggle='dropdown' ><i class="fa fa-user fa-2x drop-down" aria-hidden="true"></i></a>
+				<div class='dropdown-menu'>
+					<a class='dropdown-item' href="{% url 'Social:profile' pk=profile.pk %}">Profile</a>
+					<a class='dropdown-item' href="{% url 'Social:savedimg' pk=profile.pk %}">Saved</a>
+					<a class='dropdown-item' href="">Chit-Chat</a>
+					<a class='dropdown-item' href="{% url 'Social:logout'%}">Log-Out</a>
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<hr>
+	
+</div>
+
+<div class='container main padding-row' style="background-color: snow;">
+
+	<div class='row'>
+		
+		<div class='col'>
+			<div class='row justify-content-center pt-4 pb-4'>
+				<h3>Saved Posts <i class="fas fa-heart fa-x" style="color: red;"></i>
+</h3>
+			</div>
+			<div class='row posts break' >
+		
+		<div class='col-sm-2'></div>
+		<div class='col-sm-8'>
+			{% for post in saved_obj.savedpost.all reversed%}
+			<div class='row d-flex card bg-white' id='{{post.pk}}' >
+				<h6> <img src='{{post.profile.pimage.url}}' class='round' alt='problem' height="40px" weight='40px'> <a href="">{{post.profile.user.username}}</a></h6>
+				
+				<p class='card-text pl-2'> {{post.caption}}</p>
+				<div class='container'>
+					{% if post.filterNum == 0 %}
+					<img ondblclick="like({{post.pk}})" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 1 %}
+					<img ondblclick="like({{post.pk}})" style="filter: grayscale(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 2 %}
+					<img ondblclick="like({{post.pk}})" style="filter:blur(1px)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 3 %}
+					<img ondblclick="like({{post.pk}})" style="filter:drop-shadow(8px 8px 10px gray)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 4 %}
+					<img ondblclick="like({{post.pk}})" style="filter:saturate(3)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 5 %}
+					<img ondblclick="like({{post.pk}})" style="filter:sepia(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 6 %}
+					<img ondblclick="like({{post.pk}})" style="filter:contrast(150%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 7 %}
+					<img ondblclick="like({{post.pk}})" style="filter:hue-rotate(40deg)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 8 %}
+					<img ondblclick="like({{post.pk}})" style="filter:opacity(80%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 9 %}
+					<img ondblclick="like({{post.pk}})" style="filter:brightness(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>
+					
+					
+					{% endif%}
+				</div>
+				<div class='card-body likecommentshare d-flex'>
+					<!-- {{post.pLiked.all}} -->
+					{% if profile.user in post.pLiked.all%}
+
+					<pre><i onclick="like({{post.pk}})" class=" red far fa-heart fa-2x" id="heart{{post.pk}}"></i>  <i onclick="commentfocus({{post.pk}})" class="far fa-comment fa-2x"></i>  <i class="far fa-share-square fa-2x"></i>                                                 			 <div id='save' style="display: inline;">{% if post in saved_obj.savedpost.all %}<i onclick="saved({{post.pk}})" id="{{post.pk}}s" class="pointer saved fas fa-envelope fa-2x"></i>{% else%}<i id='{{post.pk}}s' onclick="saved({{post.pk}})" class="far fa-envelope-open pointer fa-2x align-self-end"></i>{% endif%}</div></pre>
+					
+					{% else %}
+					<pre><i onclick="like({{post.pk}})" class="far fa-heart fa-2x" id="heart{{post.pk}}"></i>  <i onclick="commentfocus({{post.pk}})" class="far fa-comment fa-2x"></i>  <i class="far fa-share-square fa-2x"></i>                                                 			 <div id='save' style="display: inline;">{% if post in saved_obj.savedpost.all %}<i onclick="saved({{post.pk}})"  id='{{post.pk}}s' class="pointer saved fas fa-envelope fa-2x"></i>{% else%}<i id='{{post.pk}}s' onclick="saved({{post.pk}})" class="far fa-envelope-open pointer fa-2x align-self-end"></i>{% endif%}</div></pre>
+					{% endif%}
+				</div>
+				<p>{{post.time}}</p>
+
+				<div class='comments pl-3'>
+				{% if post.comments%}
+					
+					{% for comment in post.comments.all reversed%}
+					{% if forloop.counter < 3 %}
+					<small><p><b><a href='#'>{{comment.user}}</a></b>
+					:{{comment.comment}}</p></small>
+					{% endif %}
+					{% endfor%}
+				{% endif%}
+				</div>
+					<div class='readmore'>
+						<small><a href="{% url 'Social:seemore' pk=post.pk %}">See More</a></small>
+					</div>
+					
+					
+					<form method="POST" action="{% url 'Social:add_comment' pk=post.pk %}">
+						{% csrf_token%}
+						<input id="comments{{post.pk}}" class='inputcomment' type="text" name="comment" placeholder="Type in your views..">
+						<button class='commentbutton' type="submit">Add</button>
+					</form>
+				
+			</div>
+			<br>
+			<br>
+
+			{% endfor%}
+		</div>
+		<div class='col-sm-2'></div>
+	
+		
+	</div>
+
+		
+	</div>
+	
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+
+// likecommentsave script
+
+	function like(pk){
+		$.ajax({
+               type: "GET",
+               url: "{% url 'Social:like' %}",
+               data: {'postpk':pk,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      const heart=document.getElementById("heart"+pk);
+                      // $("#heart"+pk).toggleClass("red");
+                      // alert("clicked!")
+                      heart.classList.toggle("red");
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+	}
+	function commentfocus(pk){
+		var comment=document.getElementById("comments"+pk)
+		comment.focus();
+	}
+	function saved(pk){
+		$.ajax({
+			type:"POST",
+			url:"{% url 'Social:saved' %}",
+			data:{'pk':pk},
+			dataType:'json',
+			success: function(response) {
+				console.log(response);
+				const s=document.getElementById('save');
+				if(response.saved){
+					// s.innerHTML='<i onclick="saved({{post.pk}})"  class="pointer saved fas fa-envelope fa-2x"></i>'
+					// console.log(s)
+					var id="#"+pk+'s'
+					 $(id).addClass("fas fa-envelope saved").removeClass("far fa-envelope-open");
+
+				}
+				else{
+					var id="#"+pk+'s'
+					$(id).addClass("far fa-envelope-open").removeClass("fas fa-envelope saved");
+				}
+
+			},
+			error: function(rs,e){
+				alert(rs.responseText);
+			}
+		});
+	}
+</script>
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+{% block content%}
+{% load staticfiles %}
+<style type="text/css">
+	.body{
+		background-color: white;
+	}
+	.h{
+		height: 70vh;
+
+	}
+	.ht{
+		height: 85vh;
+		position: fixed;
+		z-index: -1;
+	}
+	.p{
+		padding-left: 180px;
+	}
+	.p1{
+		padding-left: 150px;
+	}
+	.font{
+		font-family: 'Open Sans Condensed', sans-serif;
+	}
+	input{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 12px;
+	}
+	.inherit{
+		color: inherit;
+	}
+	.tab{
+		padding-right: 60px;
+	}
+
+	/**/
+
+
+
+</style>
+
+
+<hr>
+<div class='container row h'>
+	<div class='col-sm-5'><img src="{% static 'img/man.gif'%}" height='70px'><img src="{% static 'img/man.gif'%}" height='100px'><img src="{% static 'img/man.gif'%}" height='130px'></div>
+	<div class='col-sm-7'>
+		<!-- <img src="{% static 'img/yellownote.jpg'%}" class='ht'> -->
+		<br><br><br><br><br><br>
+		<h3 class='p font'><b>Log into the SocialBee-Hive<b></h3>
+		<br><br><br><br>
+		<form class='p' method="POST">
+			{% csrf_token %}
+			<input type='text' placeholder="Type in your username." name='username'><br>
+			<br>
+			<input type='password' placeholder="Type in your password" name='password'><br><br>
+			<button class='btn btn-dark' type='sub'>LogIn</button>
+		</form>
+		<br><br>
+		<a class='p' href="{% url 'Social:register'%}">Do not have an account? Sign In.</a>
+		<br><br><br><br><hr>
+		<a  href="#" class='font inherit tab p1'>About</a> <a class='tab inherit font'>|</a> <a href="#" class="font inherit tab">Blogs</a>  <a class='tab inherit font'>|</a><a href="#" class='font inherit tab'>Help</a>
+	</div>
+	
+
+	
+</div>
+
+
+
+
+{% endblock%}

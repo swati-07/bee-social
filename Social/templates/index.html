@@ -1,0 +1,1077 @@
+{% extends 'base.html'%}
+{% block content%}
+{% load staticfiles %}
+
+
+
+
+<style type="text/css">
+.atlassian-autocomplete.suggestions{
+min-width: 2000px;
+}
+	body{
+		overflow: auto;
+	}
+	button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+/*.h{
+	height: 300vh;
+}*/
+.red{
+	color: red;
+}
+	
+.fix {
+  position:fixed;
+  top: 0 ;
+  width:100%;
+  margin-bottom: 0%;
+  }
+.main {
+  padding: 16px;
+  margin-top: 85px;
+  height: 1500px; /* Used in this example to enable scrolling */
+  position: absolute;
+  z-index: -1;
+}
+a{
+	color: inherit;
+}
+.storyopen{
+	width:70px;
+  height:70px;
+  object-fit:cover;
+	border-radius: 50%;
+	border: 3px solid dimgrey;
+
+}
+.story{
+	width:70px;
+  height:70px;
+  object-fit:cover;
+	border-radius: 50%;
+	border: 4px solid palevioletred;
+
+}
+
+.pad{
+	padding-left: 400px;
+}
+.round{
+/*clip-path: circle();*/
+width:50px;
+  height:50px;
+  object-fit:cover;
+  border-radius:50%;
+
+
+}
+hr{
+	padding-bottom:1px;
+}
+.comments{
+	line-height: 2px;
+}
+.inputcomment{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcomments{
+		width: 90%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.inputcommentss{
+		width: 100%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	}
+.commentbutton{
+	height:20px;
+}
+.w50{
+	width:50px;
+}
+.peach{
+	background-color: #FFD7CD;
+	border-radius: 20px;
+}
+.messages{
+	position:fixed;
+	top:15%;
+	left:73%;
+	right: 0%;
+	height: 100vh;
+	scroll-behavior: auto;
+	
+}
+.hidden{
+    visibility: hidden;
+}
+
+.shown{
+    visibility: visible;
+}
+.pointer {cursor: pointer;}
+.center{
+	padding-top: 20px;
+	padding-left: 150px;
+}
+
+.right{
+	padding-left:370px; 
+}
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+.purple{
+	background-color: #D8BFD8;
+}
+.saved{
+	color: #D8BFD8;
+}
+.fa-heart{
+	cursor: pointer;
+}
+.fa-comment{
+	cursor: pointer;
+}
+.fa-share-square{
+	cursor: pointer;
+}
+.fa-envelope-open{
+	cursor: pointer;
+}
+/* POp up box styling*/
+
+
+
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 70%;
+  height: 72%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+.filters{
+	max-height:80%;
+	/*background-color: #D8BFD8;*/
+
+}
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: violet;
+}
+.popup .content {
+  max-height: 100%;
+  max-width: 100%;
+  
+}
+#blah{
+	
+}
+.filterimg{
+	width: 100%;
+	max-height:200%;
+
+	
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 100%;
+  }
+  .popup{
+    width: 70%;
+
+  }
+}
+/*end pop up box styling*/
+
+
+
+/*Styling of filters*/
+img#f1{
+filter: grayscale(100%);
+}
+img#f2{
+filter:blur(1px);
+}
+img#f3{
+filter:drop-shadow(8px 8px 10px gray);
+}
+img#f4{
+filter:saturate(3);
+}
+img#f5{
+filter:sepia(100%);
+}
+img#f6{
+ filter:contrast(150%);
+}
+img#f7{
+filter:hue-rotate(40deg);
+}
+img#f8{
+filter:opacity(80%);
+}
+img#f9{
+filter:brightness(100%);
+}
+/*end of filters styling*/
+
+/*story styling*/
+.storyline{
+	width: 100%;
+	overflow-x:hidden;
+  overflow-y:hidden;
+  
+}
+
+.scoll-pane {
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    outline: none;
+    overflow-y: hidden;
+    padding-bottom: 15px;
+    /*-ms-overflow-style: scroll;  // IE 10+
+    scrollbar-width: none;  // Firefox*/
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+  .scoll-pane{ 
+  display: none;  // Safari and Chrome
+  }
+
+
+
+ 
+/*end story*/
+/*add story*/
+
+.overlayStory {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlayStory:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popupStory {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+ 
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popupStory h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popupStory .closeStory {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popupStory .closeStory:hover {
+  color: #06D85F;
+}
+.popupStory .contentStory {
+
+}
+
+@media screen and (max-width: 700px){
+ 
+  .popupStory{
+    width: 70%;
+  }
+}
+
+
+/*end add story*/
+.card{
+	padding-left: 0px ;
+}
+.popstoryimg{
+height: 35vh;
+width: auto;
+	
+	}
+</style>
+
+
+<div class='container-fluid fix'>
+	<div class='row pt-1'></div>
+
+	<div class='row pt-2 pb-1 warning'>
+		<div class='col-sm-3 d-flex justify-content-center'>
+			<h1><a href="{% url 'Social:index'%}"><b>Bee-Social</b></a></h1>
+		</div>
+		<div class='pl-5 col-sm-6 d-flex align-items-center'>
+			<form class='text-center' id='search' method="POST" action="{% url 'Social:searchresult'%}" autocomplete="off">
+				<input class='text-center ' style="margin-left:100px ;" type="text" name="search" size=50 id='id_input' placeholder='Search for profiles, users and friends and be social :)'>
+				<button class='submit'><i class="fas fa-search fa-lg"></i></button>
+
+			</form>
+		</div>
+		<div class='col-sm-3 d-flex justify-content-end align-items-center'>
+			<a href="#popup1"><i class="fa fa-plus fa-2x pr-5" aria-hidden="true"></i></a>
+			<a href=""><i class="fas fa-comments fa-2x pr-5"></i></a>
+			<div class='dropdown'>
+				<a class='dropdown-toggle' id='dropdownMenuLink' data-toggle='dropdown' ><i class="fa fa-user fa-2x drop-down" aria-hidden="true"></i></a>
+				<div class='dropdown-menu'>
+					<a class='dropdown-item' href="{% url 'Social:profile' pk=profile.pk %}">Profile</a>
+					<a class='dropdown-item' href="{% url 'Social:savedimg' pk=profile.pk %}">Saved</a>
+					<a class='dropdown-item' href="">Chit-Chat</a>
+					<a class='dropdown-item' href="{% url 'Social:logout'%}">Log-Out</a>
+					
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<hr>
+	
+</div>
+	
+	
+<div class='container main'>
+		
+	<div class='row'>
+		<div class='col-sm-5' style='background-color: #F3F3F3; margin-right: 10px; padding-top: 5px;'>
+			<div class='container'>
+				<div class='row'>
+					<div class='col'>
+						<h4> 
+					<img src='{{profile.pimage.url}}' style="" class='round' alt='problem' height="50px" width='50px'> <a href="{% url 'Social:profile' pk=profile.pk %}">{{profile.user.username}}</a>
+				</h4>
+				<hr>
+				<br>
+				<br>
+				<p class='row'><a href="{% url 'Social:profile' pk=profile.pk %}"><i class="fas fa-ellipsis-v"> </i> Profile</a></p>
+				<hr>
+
+				<p class='row'><a href="{% url 'Social:savedimg' pk=profile.pk %}"><i class="fas fa-ellipsis-v"> </i> Saved</a></p><hr>
+				<p class='row'><i class="fas fa-ellipsis-v"></i>  Chit Chats</p><hr>
+				<p class='row'><a href="#popup1"><i class="fas fa-ellipsis-v" > </i> Add Photos</a></p><hr>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='col-sm-6'>
+
+			<!-- Stories -->
+			<div class=' p-0 storyline scroll-pane' id='container'>
+				<ul class='photos'>
+
+				<li><a href="#popup1Story"><div style="display: inline;" class='pl-2'>
+										<img src="{% static 'img/addstory.png'%}" height="80px" width="80px" class='storyopen'>
+				</div></a></li>
+				{% for story in stories %}
+				{% if story.profile == profile %}
+				{% if story.story1.url is not None %}
+				<li id="{{story.pk}}"><a href="{% url 'Social:story' pk=story.pk%}"><div style="display: inline;" class='pl-2'>
+				<img id="{{story.pk}}s" onclick="removepink({{story.pk}})" src="{{story.profile.pimage.url}}" height="75px" width="75px" class='storyopen'>
+				</div></a></li>
+				{% endif%}
+				{% endif%}
+				{% endfor%}
+				{% for story in stories %}
+				{% if story.profile == profile %}
+				{% else%}
+
+							{% if request.user in story.openedby.all%}
+							{% if story.story1 %}
+							<li id="{{story.pk}}"><a href="{% url 'Social:story' pk=story.pk%}"><div style="display: inline;" class='pl-2'>
+								<img src="{{story.profile.pimage.url}}" height="75px" width="75px" class='storyopen'>
+							</div></a></li>
+							{% endif%}
+							{% else%}
+							{% if story.story1 %}
+							<li id="{{story.pk}}"><a href="{% url 'Social:story' pk=story.pk%}"><div style="display: inline;" class='pl-2'>
+								<img id="{{story.pk}}s" onclick="removepink({{story.pk}})" src="{{story.profile.pimage.url}}" height="75px" width="75px" class='story'>
+							</div></a></li>
+							{% endif%}
+							{% endif%}
+				{% endif %}
+				{% endfor%}
+				</ul>
+			</div>
+			<div class='row pl-2'>
+					<div class='col-sm-4'><a id="slideBack" type="button"><i class="fas fa-caret-left"></i></a></div>
+					<div class='col-sm-4'></div>
+					<div class="col-sm-4 text-right"><a  id="slide" type="button"><i class="fas fa-caret-right"></i></a></div>
+			</div>
+			
+		
+			<!-- end stories -->
+			<hr>
+			{% for post in posts %}
+
+			<div class='row d-flex card bg-white'  >
+				<h6> 
+					<img src='{{post.profile.pimage.url}}' style="" class='round' alt='problem' height="40px" weight='40px'> <a href="{% url 'Social:profile' pk=post.profile.pk %}">{{post.profile.user.username}}</a>
+				</h6>
+				
+				<p class='card-text pl-3'> {{post.caption}}</p>
+				<div class='container' id="{{post.pk}}">
+					{% if post.filterNum == 0 %}
+					<img ondblclick="like({{post.pk}})" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 1 %}<img ondblclick="like({{post.pk}})" style="filter: grayscale(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 2 %}<img ondblclick="like({{post.pk}})" style="filter:blur(1px)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 3 %}<img ondblclick="like({{post.pk}})" style="filter:drop-shadow(8px 8px 10px gray)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 4 %}<img ondblclick="like({{post.pk}})" style="filter:saturate(3)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 5 %}<img ondblclick="like({{post.pk}})" style="filter:sepia(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 6 %}<img ondblclick="like({{post.pk}})" style="filter:contrast(150%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 7 %}<img ondblclick="like({{post.pk}})" style="filter:hue-rotate(40deg)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 8 %}<img ondblclick="like({{post.pk}})" style="filter:opacity(80%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>{% endif%}
+					{% if post.filterNum == 9 %}<img ondblclick="like({{post.pk}})" style="filter:brightness(100%)" class='card-img-top' src='{{post.image.url}}' alt='Problem' max-width="100" max-height='100'>
+					
+					
+					{% endif%}
+
+				</div>
+				<div class='card-body likecommentshare d-flex'>
+					<!-- {{post.pLiked.all}} -->
+					{% if profile.user in post.pLiked.all%}
+
+					<pre><i onclick="like({{post.pk}})" class=" red far fa-heart fa-2x" id="heart{{post.pk}}"></i>  <i onclick="commentfocus({{post.pk}})" class="far fa-comment fa-2x"></i>  <i class="far fa-share-square fa-2x"></i>                                                  <div id='save' style="display: inline;">{% if post in savedobj.savedpost.all %}<i onclick="saved({{post.pk}})" id="{{post.pk}}s" class="pointer saved fas fa-envelope fa-2x"></i>{% else%}<i id='{{post.pk}}s' onclick="saved({{post.pk}})" class="far fa-envelope-open pointer fa-2x align-self-end"></i>{% endif%}</div></pre>
+					
+					{% else %}
+					<pre><i onclick="like({{post.pk}})" class="far fa-heart fa-2x" id="heart{{post.pk}}"></i>  <i onclick="commentfocus({{post.pk}})" class="far fa-comment fa-2x"></i>  <i class="far fa-share-square fa-2x"></i>                                                  <div id='save' style="display: inline;">{% if post in savedobj.savedpost.all %}<i onclick="saved({{post.pk}})"  id='{{post.pk}}s' class="pointer saved fas fa-envelope fa-2x"></i>{% else%}<i id='{{post.pk}}s' onclick="saved({{post.pk}})" class="far fa-envelope-open pointer fa-2x align-self-end"></i>{% endif%}</div></pre>
+					{% endif%}
+				</div>
+				<p class='pl-3'>{{post.time}}</p>
+
+				<div class='comments pl-3'>
+				{% if post.comments%}
+					
+					{% for comment in post.comments.all reversed%}
+					{% if forloop.counter < 3 %}
+					<small><p><b><a href='#'>{{comment.user}}</a></b>
+					:{{comment.comment}}</p></small>
+					{% endif %}
+					{% endfor%}
+				{% endif%}
+				</div>
+					<div class='readmore'>
+						<small><a class='pl-3' href="{% url 'Social:seemore' pk=post.pk %}">See More  <i class="pr-1 fas fa-angle-down"></i></a></small>
+					</div>
+					
+					
+					<form method="POST" action="{% url 'Social:add_comment' pk=post.pk %}">
+						{% csrf_token%}
+						<input id="comments{{post.pk}}" class='inputcomment' type="text" name="comment" placeholder="Type in your views..">
+						<button class='commentbutton' type="submit">Add</button>
+					</form>
+				
+			</div>
+			<br>
+			<br>
+
+			{% endfor%}
+		</div>
+		<!-- <div class='col-sm-1'></div> -->
+
+	</div>
+		
+	</div>
+
+
+
+
+<!-- add story pop box -->
+<div id="popup1Story" class="overlayStory">
+	<div class="popupStory" style="height: 65%;width:38%">
+		<h2 class='text-center'>Happy Storying ;)</h2>
+		<h6 class='text-center text-secondary'><small >Atmost 3 storying a day...</small></h6>
+		<hr>
+		
+		<a class="closeStory" href="#">&times;</a>
+		<form method="POST" action="{% url 'Social:storyimage'%}" enctype="multipart/form-data">
+		<div class="container contentStory">
+						<div id="carouselExampleControls" class="row carousel slide" data-ride="carousel" >
+							  <div class="col carousel-inner text-center">
+								    <div class="carousel-item active " style="position: relative;">
+
+								    	<input id="story-image-upload1" name='story1' class="hidden" type="file" onchange="readURL1(this);">
+								    	
+								    	{% if mystory.story1.url is not null %}
+								      <img class="popstoryimg" src="{{mystory.story1.url}}" alt="First slide">
+								    	{% else%}
+								    	<h6 class='text-center text-secondary' style=" position: absolute;
+																															  top: 50%;
+																															  left: 50%;
+																															  transform: translate(-50%, -50%);
+																															  cursor: pointer;">
+											<small >Click on the image to add!</small></h6>
+								    	<img class="popstoryimg" style="cursor: pointer;" id='story-image1' src="{% static 'img/addstory2.png'%}" alt="First slide" >
+								    	{% endif%}
+								    </div>
+								   <div class="col carousel-item " style="position: relative;">
+
+								   	<input id="story-image-upload2" name='story2' class="hidden" type="file" onchange="readURL2(this);">
+								    	{% if mystory.story2.url is not null %}
+								      <img class="popstoryimg" src="{{mystory.story2.url}}" alt="First slide" >
+								    	{% else%}
+								    	<h6 class='text-center text-secondary' style=" position: absolute;
+																															  top: 50%;
+																															  left: 50%;
+																															  transform: translate(-50%, -50%);
+																															  cursor: pointer;">
+																															  <small >Click on the image to add!</small></h6>
+								    	<img class="popstoryimg" style="cursor: pointer;" id='story-image2' src="{% static 'img/addstory2.png'%}" alt="First slide" >
+								    	{% endif%}
+								    </div>
+								   <div class="col carousel-item" style="position: relative;">
+
+								   	<input id="story-image-upload3" name='story3' class="hidden" type="file" onchange="readURL3(this);">
+								    	{% if mystory.story3.url is not null %}
+								      <img class="popstoryimg" src="{{mystory.story3.url}}" alt="First slide" >
+								    	{% else%}
+
+								    	<img class="popstoryimg" style="cursor: pointer;" id='story-image3' src="{% static 'img/addstory2.png'%}" alt="First slide">
+								    	<h6 class='text-center text-secondary' style=" position: absolute;
+																															  top: 50%;
+																															  left: 50%;
+																															  transform: translate(-50%, -50%);
+																															  cursor: pointer;">
+																															  <small >Click on the image to add!</small></h6>
+								    	{% endif%}
+								    </div>
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+								    <span><i class="fa fa-angle-left fa-2x text-secondary" aria-hidden="true"></i></span>
+								    <span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+								    <span><i class="fa fa-angle-right fa-2x text-secondary" aria-hidden="true"></i></span>
+								    <span class="sr-only">Next</span>
+								 </a>
+						</div>
+
+						<button class='btn btn-danger btn-block mt-1'>Add Story</button>
+		</div>
+	</form>
+	</div>
+</div>
+<!-- end add story pop box -->
+
+
+
+
+
+
+<!-- Popup box for adding posts-->
+
+<div id="popup1" class="overlay">
+	<div class="popup">
+		<h2 class='pl-3'>Add Posts</h2>
+		<a class="close" href="#">&times;</a>
+		<form method='POST' class='' action="{% url 'Social:postimage'%}" enctype="multipart/form-data">
+		<div class='row'>
+			<div class="col-sm-7 content">
+			<br>
+			<div class='container row pl-4 '>
+				<div class='col'>
+					<div class='row'><label for='caption'>Caption: </label><input type='textbox' class='inputcommentss' name='caption' id="caption">
+</div>
+					<div class='row'><img id="blah" class='pt-5 ' src="{% static 'img/upload.jpg'%}" height='200%' >
+    				<br><br>
+				</div>
+
+				</div>
+				
+				
+				
+				
+			</div>
+			
+		</div>
+		<div class='col-sm-5 filters '>
+			<br>
+			<div class='row'>
+				<div class='col-sm-4'><img class='filterimg' id="f1" src="{% static 'img/filters.jpg'%}" onclick="apply1()" height='100'  width='100'></div>
+				<div class='col-sm-4'><img id="f2"  class='filterimg' src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply2()"></div>
+				<div class='col-sm-4'><img id="f3" class='filterimg' src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply3()"></div>
+			</div>
+			<br>
+			<div class='row'>
+				<div class='col-sm-4'><img class='filterimg' id="f4" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply4()"></div>
+				<div class='col-sm-4'><img class='filterimg' id="f5" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply5()"></div>
+				<div class='col-sm-4'><img class='filterimg' id="f6" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply6()"></div>
+			</div>
+			<br>
+			<div class='row'>
+				<div class='col-sm-4'><img class='filterimg' id="f7" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply7()"></div>
+				<div class='col-sm-4'><img class='filterimg' id="f8" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply8()"></div>
+				<div class='col-sm-4'><img class='filterimg' id="f9" src="{% static 'img/filters.jpg'%}" height='100'  width='100' onclick="apply9()"></div>
+			</div>
+			<br>
+				<input class='btn purple inputcomment w80' type='file' name='photo' id='photo' onchange="readURL(this);">
+				<input class='btn purple' type="submit" value='Post'>
+				<input id='filternum' type='text' value=0 name='filternum' hidden>
+
+		</div>
+		</div>
+		</form>
+	</div>
+</div>
+<!--End pop up box-->
+
+
+
+
+<!-- messages chatting -->
+	<div class='container messages peach hidden' id='messages'>
+		<div class='right'> <i onclick="hide()" class="fa fa-times" aria-hidden="true"></i>
+		<br>
+		</div>
+		<div class='m-1 row bg-white'>
+			<p class='center'>M E S S A G E S</p>
+		</div>
+		<br>
+		<form>
+		<textarea class='form-control bg-white' id='chat-text' rows='15'></textarea><br>
+		
+			
+		<div class=' end'><input class='inputcomments form-control' type="text" name="input" id='input'><button class='hidden' id='submit'>Send</button></div>			
+			
+		</form>
+		
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.structure.min.css" integrity="sha512-oM24YOsgj1yCDHwW895ZtK7zoDQgscnwkCLXcPUNsTRwoW1T1nDIuwkZq/O6oLYjpuz4DfEDr02Pguu68r4/3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css" integrity="sha512-9h7XRlUeUwcHUf9bNiWSTO9ovOWFELxTlViP801e5BbwNJ5ir9ua6L20tEroWZdm+HFBAWBLx2qH4l4QHHlRyg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Search script autocomplete -->
+<script type="text/javascript">
+	jQuery(function() {
+		$(function(){
+			$("#id_input").on('keyup', function(){
+        let value = $(this).val();
+        $.ajax({
+            url: "{% url 'Social:searchresult' %}",
+            data: {
+              'username_query': value 
+            },
+            dataType: 'json',
+            success: function (data) {
+                let usernames = data.usernames;
+                var suggestions=document.createElement('div');
+                for(var i=1;i<=usernames.length;i++)
+                {
+                	var row=document.createElement('row');
+                	for(var j=1;j<=2;j++)
+                	{
+                		
+                	}
+                }
+
+
+            }
+        });        
+    });
+		});
+    
+  });
+</script>
+<script type="text/javascript">
+	function hover(){
+
+	}
+</script>
+
+<!-- like-comment-save script -->
+<script type="text/javascript">
+	function like(pk){
+		$.ajax({
+               type: "GET",
+               url: "{% url 'Social:like' %}",
+               data: {'postpk':pk,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      const heart=document.getElementById("heart"+pk);
+                      // $("#heart"+pk).toggleClass("red");
+                      // alert("clicked!")
+                      heart.classList.toggle("red");
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+	}
+	function commentfocus(pk){
+		var comment=document.getElementById("comments"+pk)
+		comment.focus();
+	}
+	function saved(pk){
+		$.ajax({
+			type:"POST",
+			url:"{% url 'Social:saved' %}",
+			data:{'pk':pk},
+			dataType:'json',
+			success: function(response) {
+				console.log(response);
+				const s=document.getElementById('save');
+				if(response.saved){
+					// s.innerHTML='<i onclick="saved({{post.pk}})"  class="pointer saved fas fa-envelope fa-2x"></i>'
+					// console.log(s)
+					var id="#"+pk+'s'
+					 $(id).addClass("fas fa-envelope saved").removeClass("far fa-envelope-open");
+
+				}
+				else{
+					var id="#"+pk+'s'
+					$(id).addClass("far fa-envelope-open").removeClass("fas fa-envelope saved");
+				}
+
+			},
+			error: function(rs,e){
+				alert(rs.responseText);
+			}
+		});
+	}
+</script>
+
+
+<!-- Story script -->
+<script type="text/javascript">
+	var button = document.getElementById('slide');
+button.onclick = function () {
+    var container = document.getElementById('container');
+    sideScroll(container,'right',25,100,10);
+};
+
+var back = document.getElementById('slideBack');
+back.onclick = function () {
+    var container = document.getElementById('container');
+    sideScroll(container,'left',25,100,10);
+};
+
+function sideScroll(element,direction,speed,distance,step){
+    scrollAmount = 0;
+    var slideTimer = setInterval(function(){
+        if(direction == 'left'){
+            element.scrollLeft -= step;
+        } else {
+            element.scrollLeft += step;
+        }
+        scrollAmount += step;
+        if(scrollAmount >= distance){
+            window.clearInterval(slideTimer);
+        }
+    }, speed);
+}
+function removepink(id){
+const story=getElementById(id+"s");
+var idd="#"+id+'s'
+$(idd).removeClass("story").addClass("storyopen");
+
+
+}
+
+$('#story-image1').on('click', function() {
+    $('#story-image-upload1').click();
+});
+$('#story-image2').on('click', function() {
+    $('#story-image-upload2').click();
+});
+$('#story-image3').on('click', function() {
+    $('#story-image-upload3').click();
+});
+
+function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#story-image1')
+                    .attr('src', e.target.result)
+                    
+
+                    
+                    document.getElementById('story-image1').style.objectFit='contain';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+ function readURL2(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#story-image2')
+                    .attr('src', e.target.result)
+                    
+
+                    
+                    document.getElementById('story-image2').style.objectFit='contain';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+function readURL3(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#story-image3')
+                    .attr('src', e.target.result)
+                    
+
+                    
+                    document.getElementById('story-image3').style.objectFit='contain';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<!-- end story script -->
+
+<!-- POst upload script -->
+<script type="text/javascript">
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    
+
+                    .height(300)
+                    .width(auto);
+                    document.getElementById('blah').style.objectFit='contain';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    
+</script>
+<!-- end post upload script -->
+
+
+
+
+<!-- Filter script -->
+<script type="text/javascript">
+	function apply1(){
+		
+		document.getElementById('blah').style.filter='grayscale(100%)';
+		document.getElementById('filternum').value=1
+		
+	}
+	function apply2(){
+		
+		document.getElementById('blah').style.filter='blur(1px)';
+		document.getElementById('filternum').value=2
+		
+	}
+	function apply3(){
+		
+		document.getElementById('blah').style.filter='drop-shadow(8px 8px 10px gray)';
+		document.getElementById('filternum').value=3
+		
+	}
+	function apply4(){
+		
+		document.getElementById('blah').style.filter='saturate(3)';
+		document.getElementById('filternum').value=4
+		
+	}
+	function apply5(){
+		
+		document.getElementById('blah').style.filter='sepia(100%)';
+		document.getElementById('filternum').value=5
+		
+	}
+	function apply6(){
+		
+		document.getElementById('blah').style.filter='contrast(150%)';
+		document.getElementById('filternum').value=6
+		
+	}
+	function apply7(){
+		
+		document.getElementById('blah').style.filter='hue-rotate(40deg)';
+		document.getElementById('filternum').value=7
+		
+	}
+	function apply8(){
+		
+		document.getElementById('blah').style.filter='opacity(80%)';
+		document.getElementById('filternum').value=8
+		
+	}
+	function apply9(){
+		
+		document.getElementById('blah').style.filter='brightness(100%)';
+		document.getElementById('filternum').value=9
+		
+	}
+</script>
+<!--end Filter script -->
+
+
+
+
+<!-- messaging script -->
+<script type="text/javascript">
+var show='{{show}}'
+console.log(show)
+if(show==='yes'){
+	div=document.getElementById("messages");
+
+$("#messages").removeClass("hidden").addClass("shown");
+
+
+}
+ // $('#messages').toggle(!$.cookie('divHidden'));
+
+function hide(){
+
+	div=document.getElementById("messages");
+
+$("#messages").removeClass("shown").addClass("hidden");
+// $.cookie('divHidden', 'true');
+
+}
+
+if (show=='yes'){
+	var roomcode="{{room_code}}"
+let socket=new WebSocket("ws://localhost:8000/ws/social/chat/"+ roomcode)
+var username="{{request.user}}"
+
+
+document.querySelector("#submit").onclick= function(e){
+	e.preventDefault();
+ 		const messageInputDom=document.querySelector("#input");
+ 		const message=messageInputDom.value;
+ 		socket.send(JSON.stringify({
+ 			'message':message,
+ 			'username':username,
+ 		}));
+ 		messageInputDom.value="";
+ 	}
+
+socket.onopen=function(e){
+	console.log('Socket Connected')
+}
+
+socket.onmessage=function(e){
+	console.log('Message')
+	const data=JSON.parse(e.data); 
+ 	
+ 		document.querySelector('#chat-text').value +=(data.username+ " :"+data.message +'\n')
+
+}
+socket.onclose=function(e){
+	console.log('Socket Disconnected')
+}
+}
+
+</script>
+
+
+{% endblock%}
+

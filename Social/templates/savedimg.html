@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load staticfiles%}
+<style type="text/css">
+	body{
+		overflow: auto;
+	}
+	button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.fix {
+  position:fixed;
+  top: 0 ;
+  width:100%;
+  margin-bottom: 0%;
+  z-index: 2;
+  }
+  a{
+	color: inherit;
+}
+.break{
+	padding-top: 5px;
+}
+.postimage{
+	max-height:100%;
+	max-width:100%;
+	padding:7px;
+	/*margin:10px;*/
+
+}
+.main{
+		min-height: 100vh;
+		z-index: 1;
+		border-left: 1px solid grey;
+		border-right: 1px solid grey;
+		padding: 0px;
+}
+.padding-row{
+	margin-top: 85px;
+}
+.edit{
+	border: 1px solid grey;
+}
+.middle{
+	margin-top: 100px;
+}
+a {
+    text-decoration: none !important;
+    text-decoration-color: black !important;
+}
+</style>
+
+<div class='container-fluid fix'>
+	<div class='row pt-1'></div>
+
+	<div class='row pt-2 pb-1 warning'>
+		<div class='col-sm-3 d-flex justify-content-center'>
+			<h1><a href="{% url 'Social:index'%}"><b>Bee-Social</b></a></h1>
+		</div>
+		<div class='pl-5 col-sm-6 d-flex align-items-center'>
+			<form id='search'>
+				<input class='text-center'type="text" name="search" size=80 placeholder='Search for profiles, users and friends and be social :)'>
+				<button class='submit'><i class="fas fa-search fa-lg"></i></button>
+
+			</form>
+		</div>
+		<div class='col-sm-3 d-flex justify-content-end align-items-center'>
+			<a href="#popup1"><i class="fa fa-plus fa-2x pr-5" aria-hidden="true"></i></a>
+			<a href=""><i class="fas fa-comments fa-2x pr-5"></i></a>
+			<div class='dropdown'>
+				<a class='dropdown-toggle' id='dropdownMenuLink' data-toggle='dropdown' ><i class="fa fa-user fa-2x drop-down" aria-hidden="true"></i></a>
+				<div class='dropdown-menu'>
+					<a class='dropdown-item' href="{% url 'Social:profile' pk=profile.pk %}">Profile</a>
+					<a class='dropdown-item' href="{% url 'Social:savedimg' pk=profile.pk %}">Saved</a>
+					<a class='dropdown-item' href="">Chit-Chat</a>
+					<a class='dropdown-item' href="{% url 'Social:logout'%}">Log-Out</a>
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<hr>
+	
+</div>
+{% if saved_obj.savedpost.all %}
+<div class='container main padding-row p-2' style="background-color: snow;">
+
+	<div class='row'>
+		
+		<div class='col'>
+			<div class='row justify-content-center pt-4 pb-4'>
+				<h3>Saved Posts <i class="fas fa-heart fa-x" style="color: red;"></i>
+</h3>
+			</div>
+			<div class='row posts break' >
+				
+		{% for post in saved_obj.savedpost.all reversed%}
+		<div class='col-sm-4 text-center post justify-content-center align-items-center'>
+			<a href="{% url 'Social:savedimglist' pk=profile.pk %}#{{post.pk}}">{% if post.filterNum == 0%}<img src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 1%}<img style="filter: grayscale(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 2%}<img style="filter:blur(1px)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 3%}<img style="filter:drop-shadow(8px 8px 10px gray)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 4%}<img style="filter:saturate(3)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 5%}<img style="filter:sepia(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 6%}<img style="filter:contrast(150%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 7%}<img style="filter:hue-rotate(40deg)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 8%}<img style="filter:opacity(80%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 9%}<img style="filter:brightness(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}</a>
+			<br>
+		</div>
+		<br class='break'>
+		
+		{% endfor%}
+		
+		
+	</div>
+	
+	</div>
+</div>
+
+{% else%}
+		<div class='middle text-center'>
+	<img src="{% static 'img/empty3.gif'%}" alt='problem'>
+	<h6>No Saved Post Yet</h6>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+{% block content%}
+{% load staticfiles %}
+<style type="text/css">
+	.h{
+		height: 70vh;
+
+	}
+	.ht{
+		height: 85vh;
+		position: fixed;
+		z-index: -1;
+	}
+	.p{
+		padding-left: 180px;
+	}
+	.p1{
+		padding-left: 150px;
+	}
+	.font{
+		font-family: 'Open Sans Condensed', sans-serif;
+	}
+	input{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 12px;
+	}
+	.inherit{
+		color: inherit;
+	}
+	.tab{
+		padding-right: 60px;
+	}
+</style>
+
+
+<hr>
+<div class='container row h'>
+	<div class='col-sm-5'><img src="{% static 'img/man.gif'%}" height='70px'><img src="{% static 'img/man.gif'%}" height='100px'><img src="{% static 'img/man.gif'%}" height='130px'></div>
+	<div class='col-sm-7'>
+		<!-- <img src="{% static 'img/yellownote.jpg'%}" class='ht'> -->
+		<br><br><br><br><br><br>
+		<h3 class='p font'><b>Grab a Cell in the SocialBee-Hive<b></h3>
+			
+		<br>
+		<small><form class='p innput' method='POST'>
+			{% csrf_token %}
+			{{form.username.label}}<br>
+			{{form.username}}
+			<br><br>
+			{{form.password1.label}}<br>
+			{{form.password1}}
+			<br><br>
+			{{form.password2.label}}<br>
+			{{form.password2}}
+			<br>
+			<br>
+
+			<button class='btn btn-dark' type='sub'>Register</button>
+		</form></small>
+		<br>
+		<a class='p' href="{% url 'Social:login'%}">Already have a cell in the hive? Log In.</a>
+		<br>
+		{{form.errors}}
+		
+		<br><br><br><hr>
+		<a href="#" class='font inherit tab p1'>About</a> <a class='tab inherit font'>|</a> <a href="#" class="font inherit tab">Blogs</a>  <a class='tab inherit font'>|</a><a href="#" class='font inherit tab'>Help</a>
+
+	</div>
+	
+
+	
+</div>
+{% endblock%}

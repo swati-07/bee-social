@@ -1,0 +1,95 @@
+{% extends 'base.html'%}
+{% block content%}
+<style type="text/css">
+.round{
+	clip-path: circle();}
+.img1{
+	height:95vh;
+	max-width: 100%;
+}
+.fix{
+	position:fixed;
+	z-index: 1;
+	color: white;
+}
+.heightmax{
+	max-height: 100%;
+}
+input{
+		width: 65%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+}
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.vertical-line{
+	height: 100vh;
+	width: 1px;
+	background-color: black;
+}
+.clickable{
+	cursor: pointer;
+}
+</style>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+<div class='container-fluid'>
+	
+	<hr>
+	<div class='pl-5 row'>
+		<div class='col-sm-9 d-flex justify-content-center'>
+			
+			<a class='clickable' href="{% url 'Social:index'%}#{{post.pk}}"><br ><small><i class="fas fa-times fa-3x fix pl-5"></i></small></a>
+			{% if post.filterNum == 0 %}<img style="" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 1 %}<img style="filter: grayscale(100%)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 2 %}<img style="filter:blur(1px)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 3 %}<img style="filter:drop-shadow(8px 8px 10px gray)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 4 %}<img style="filter:saturate(3)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 5 %}<img style="filter:sepia(100%)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 6 %}<img style="filter:contrast(150%)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 7 %}<img style="filter:hue-rotate(40deg)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 8 %}<img style="filter:opacity(80%)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+			{% if post.filterNum == 9 %}<img style="filter:brightness(100%)" class='img1' src="{{post.image.url}}" alt='problem'>{% endif%}
+		</div>
+		<div class='col-sm-3'>
+			<div class='row'>
+
+				<div class='col-sm- vertical-line'></div>
+
+				<div class='col-sm-11 comments'>
+					<h6> <img src='{{post.profile.pimage.url}}' 
+						class='round' alt='problem' height="40px" weight='40px'> <a href="">{{post.profile.user.username}}</a>
+					</h6>
+					
+					<p class=''> {{post.caption}} <br><br><small>posted on-  {{post.time}}</small> </p>
+					<hr>
+					{% if post.comments%}
+						{% for comment in post.comments.all reversed%}
+						<p><b><a href='#'>{{comment.user}}</a></b>
+						:{{comment.comment}}</p>
+						{% endfor%}
+					{% endif%}
+					
+					<div class=''>	
+							<form method="POST" action="{% url 'Social:add_comment_specific' pk=post.pk %}">
+								{% csrf_token%}
+								<input class='inputcomment' type="text" name="comment" placeholder="Type in your views..">
+								<button class='commentbutton' type="submit">Add</button>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock%}

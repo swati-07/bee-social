@@ -1,0 +1,639 @@
+{% extends 'base.html' %}
+{% block content%}
+<style type="text/css">
+	button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+a{
+	color: inherit;
+}
+.discolor{
+	text-decoration: none;
+}
+.fix {
+  position:fixed;
+  top: 0 ;
+  width:100%;
+  z-index: 2
+  }
+ .profilebox{
+ 	padding-left: 100px;
+ 	padding-right: 100px;
+ 	
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	border-right: 1px solid black;
+ 	border-left: 1px solid black;
+ 	/*position:relative;*/
+ 	z-index: 1;
+ }
+ .round{
+clip-path: circle();
+}
+
+.edit{
+	border: 1px solid grey;
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+.break{
+	padding-top: 5px;
+}
+.postimage{
+	max-height:100%;
+	max-width:100%;
+	padding:7px;
+	/*margin:10px;*/
+
+}
+.purple{
+	background-color: #D8BFD8;
+}
+.post{
+	height:250px;
+	/*border-right: 0.5px solid grey;
+ 	border-left: 1px solid grey;*/
+ 	
+
+
+}
+.posts{
+	visibility: visible;
+}
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+.inputedit{
+		width: 80%;
+		border: none;
+		border-bottom: 2px solid black;
+		padding: 7px;
+	
+}
+
+/*pop up box1 styling*/
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 90px auto;
+  padding: 1%;
+  background: #fff;
+  border-radius: 5px;
+  width: 35%;
+  
+  position: relative;
+  z-index: 3;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 100%;
+  
+}
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+/*pop up box styling end*/
+
+
+
+
+/*pop up box2 styling*/
+
+.overlay2 {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay2:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup2 {
+  margin: 140px auto;
+  padding: 1%;
+  background: #fff;
+  border-radius: 5px;
+  width: 20%;
+  max-height: 50%;
+  overflow: auto;
+  position: relative;
+  z-index: 3;
+  transition: all 5s ease-in-out;
+}
+
+.popup2 h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup2 .close2 {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup2 .close2:hover {
+  color: #06D85F;
+}
+.popup2 .content2 {
+  max-height: 100%;
+  width: 100%;
+  
+}
+@media screen and (max-width: 700px){
+  .box2{
+    width: 70%;
+  }
+  .popup2{
+    width: 50%;
+  }
+}
+/*pop up box styling end*/
+
+
+
+/*pop up box3 styling*/
+
+.overlay3 {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay3:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup3 {
+  margin: 140px auto;
+  padding: 1%;
+  background: #fff;
+  border-radius: 5px;
+  width: 20%;
+  max-height: 50%;
+  overflow: auto;
+  position: relative;
+  z-index: 3;
+  transition: all 5s ease-in-out;
+}
+
+.popup3 h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup3 .close3 {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup3 .close3:hover {
+  color: #06D85F;
+}
+.popup3 .content3 {
+  max-height: 100%;
+  width: 100%;
+  
+}
+@media screen and (max-width: 700px){
+  .box3{
+    width: 70%;
+  }
+  .popup3{
+    width: 50%;
+  }
+}
+/*pop up box 3 styling end*/
+.saved{
+	color: #D8BFD8;
+}
+
+
+</style>
+
+<div class='container-fluid fix'>
+	<div class='row pt-1'></div>
+
+	<div class='row pt-2 pb-1 warning'>
+		<div class='col-sm-3 d-flex justify-content-center'>
+			<h1><a href="{% url 'Social:index'%}"><b>Bee-Social</b></a></h1>
+		</div>
+		<div class='col-sm-6 d-flex align-items-center'>
+			<form id='search'>
+				<input class='text-center'type="text" name="search" size=83 placeholder='Search for profiles, users and friends and be social :)'>
+				<button class='submit'><i class="fas fa-search fa-lg"></i></button>
+
+			</form>
+		</div>
+		<div class='col-sm-3 d-flex justify-content-end align-items-center'>
+			
+			<a href=""><i class="fas fa-comments fa-2x pr-5"></i></a>
+			<div class='dropdown'>
+				<a class='dropdown-toggle' id='dropdownMenuLink' data-toggle='dropdown' ><i class="fa fa-user fa-2x drop-down" aria-hidden="true"></i></a>
+				<div class='dropdown-menu'>
+					<a class='dropdown-item' href="{% url 'Social:profile' pk=profile.pk %}">Profile</a>
+					<a class='dropdown-item' href="{% url 'Social:savedimg' pk=profile.pk %}">Saved</a>
+					<a class='dropdown-item' href="">Chit-Chat</a>
+					<a class='dropdown-item' href="{% url 'Social:logout'%}">Log-Out</a>
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<hr>
+	
+</div>
+<br><br><br><br><br>
+<div class='container profilebox '>
+	<div class='row'>
+		<div class='col-sm-3 text-right'><img src="{{profile.pimage.url}}" class='round' alt='problem' height='150px' width="auto"></div>
+		<div class='col-sm-5'>
+			<br>
+			<div class='pl-2 row'>
+				{% if profile.user == request.user %}
+				<h3>{{profile.user.username}}<a href='#popup1'> <button class='btn btn-lead edit'>Edit Profile <i class="fas fa-cogs"></i></button></a></h3>
+				
+				{% else %}
+					{% if profile.followers.all %}
+						{% if profile2 in profile.followers.all %}
+
+							
+							<h3>{{profile.user.username}} <button id='fbutton' onclick="follow({{profile.pk}})" class='btn btn-lead edit'>Following</button></h3>
+							{% else%}
+							<h3>{{profile.user.username}} <button id='fbutton' onclick="follow({{profile.pk}})" class='btn btn-lead edit'>Follow</button></h3>
+							{% endif%}
+						
+					{% else%}
+						<h3>{{profile.user.username}} <button id='fbutton' onclick="follow({{profile.pk}})" class='btn btn-lead edit'>Follow</button></a></h3>
+					{% endif%}
+				{% endif%}
+			</div>
+			<br>
+			<div class='row'>
+				<div class='col text-left'>
+					<h6>{{postcount}} Posts</h6>
+					
+				</div>
+				<div class='col text-left'>
+					<a href='#popup2'><h6 id="followers">{{profile.followers.count}} Followers</h6></a>
+					
+				</div>
+				<div class='col text-left'>
+					<a href='#popup3'><h6>{{profile.following.count}} Following</h6></a>
+					
+				</div>
+			</div>
+			
+			<div class='row break'>
+				<div class='col'>
+					<div class='row'><h6 class='pl-3'><b>{{profile.user.first_name}} {{profile.user.last_name}}</b></h6></div>
+				<div class='row'><p class='pl-3'>{{profile.bio}}</p></div>
+				</div>
+				
+				
+				
+			</div>
+			
+		</div>
+		<div class='col-sm-4 text-right'>
+			<br>
+			{% if profile == profile2 %}
+			<a href="{% url 'Social:savedimg' pk=profile.pk %}"><button class='align-self-right btn btn-lead'>SAVED <i class="saved fas fa-envelope"></i></button></a>
+			{% else%}
+			<a href="{% url 'Social:message' pk=profile.pk %}"><button class='align-self-right btn btn-lead'>MESSAGE</button></a>
+			{% endif %}
+		</div>
+		
+	</div>
+	<hr>
+	<div class='row'>
+		
+		<div class='col text-right'><a class='discolor' href="{% url 'Social:profileposts' pk=profile.pk %}">Posts</a></div>
+	</div>
+
+	<div class='row posts break' id='posts' >
+		{% for post in posts reversed%}
+		<div class='col-sm-4 text-center post justify-content-center align-items-center'  >
+			<a href="{% url 'Social:profileposts' pk=profile.pk %}#{{post.pk}}">{% if post.filterNum == 0%}<img src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 1%}<img style="filter: grayscale(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 2%}<img style="filter:blur(1px)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 3%}<img style="filter:drop-shadow(8px 8px 10px gray)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 4%}<img style="filter:saturate(3)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 5%}<img style="filter:sepia(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 6%}<img style="filter:contrast(150%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 7%}<img style="filter:hue-rotate(40deg)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 8%}<img style="filter:opacity(80%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}{% if post.filterNum == 9%}<img style="filter:brightness(100%)" src='{{post.image.url}}' alt='problem' class='postimage'>{% endif%}</a>
+			<br>
+		</div>
+		<br class='break'>
+		
+		{% endfor%}
+		
+	</div>
+	<div class='row saved'></div>
+		
+
+
+	
+</div>
+<!-- pop up box -->
+<div id="popup1" class="overlay">
+	<div class="popup">
+		<h2 class='text-center'>Update Profile</h2>
+		<br>
+		<a class="close" href="#">&times;</a>
+		<div class="content">
+			<form method="POST" action="{% url 'Social:editprofile' pk=profile.pk %}"  autocomplete="off"  enctype="multipart/form-data">
+				<div class='row'>
+				<div class='col-sm-5 text-center'><img src="{{profile.pimage.url}}" class='round' alt='problem' height='80px' width="auto"></div>
+				<div class='col-sm-7'>
+					<h6>Change Profile Picture? <i class="fas fa-arrow-circle-down"></i></h6>
+					<input class='btn purple inputedit w80' type='file' name='photo' value={{profile.pimage}} id='photo'>
+				</div>
+				
+				</div>
+				<hr>
+				
+				<div class='row'>
+					<div class='col-sm-5 '><h6>Username ~ {{profile.user.username}}</h6></div>
+					<div class='col-sm-7'><h6>Change username? <i class="fas fa-arrow-circle-down"></i></h6>
+						<input type='text' name='username' id="editusername" class='editusername inputedit' value={{profile.user.username}} placeholder="{{profile.user.username}}">
+					</div>
+					
+				</div>
+				<hr>
+				<div class='row'>
+					<div class='col-sm-5 '><h6>Bio ~ {{profile.bio}} </h6></div>
+					<div class='col-sm-7'><h6>Change Bio? <i class="fas fa-arrow-circle-down"></i></h6>
+						<input type='text' name='bio' class='editbio inputedit'  placeholder="{{profile.bio}}" value={{profile.bio}}>
+					</div>
+					
+				</div>
+				<hr>
+				<div class='row text-center m-2'>
+					<button type="submit" class='btn btn-block btn-dark'>Edit</button>
+					</div>
+					
+				</div>
+
+			</form>
+			
+		</div>
+	</div>
+</div>
+<!-- end pop up -->
+
+
+
+<!-- pop up box 2-->
+<div id="popup2" class="overlay2">
+	<div class="popup2">
+		<h3 class='text-center'>Followers</h3>
+		<br>
+		<a class="close2" href="#">&times;</a>
+		<div class="content2">
+		{% for follower in profile.followers.all%}
+		<div class='row'>
+			<div class='col-sm-7'><a  href="{% url 'Social:profile' pk=follower.pk %}"><img src="{{follower.pimage.url}}" class='round' alt='problem' height="40px" weight='40px'> {{follower.user.username}}</a></div>
+			<div class='col-sm-5'>
+				{% if follower.followers%}
+						{% if profile2 in follower.followers.all%}
+
+							
+							<button id='f2button' onclick="follow2({{follower.pk}})" class='btn purple'>Following</button>
+							{% else%}
+							<button id='f2button' onclick="follow2({{follower.pk}})" class='btn purple'>Follow</button>
+							{% endif%}
+						
+					{% else%}
+						<button id='f2button' onclick="follow2({{follower.pk}})" class='btn purple'>Follow</button>
+						{% endif%}
+					</div>
+		</div>
+		{% endfor%}
+					
+				</div>
+
+			</form>
+			
+		</div>
+	</div>
+</div>
+<!-- end pop up 2-->
+
+
+<!-- pop up box 3-->
+<div id="popup3" class="overlay3">
+	<div class="popup3">
+		<h3 class='text-center'>Following</h3>
+		<br>
+		<a class="close3" href="#">&times;</a>
+		<div class="content3">
+		{% for following in profile.following.all%}
+		<div class='row'>
+			<div class='col-sm-7'><a  href="{% url 'Social:profile' pk=following.pk %}"><img src="{{following.pimage.url}}" class='round' alt='problem' height="40px" weight='40px'> {{following.user.username}}</a></div>
+			<div class='col-sm-5'>
+				{% if following.followers%}
+						{% if profile2 in following.followers.all%}
+
+							
+							<button id='f3button' onclick="follow3({{following.pk}})" class='btn purple'>Following</button>
+							{% else%}
+							<button id='f3button' onclick="follow3({{following.pk}})" class='btn purple'>Follow</button>
+							{% endif%}
+						
+					{% else%}
+						<button id='f3button' onclick="follow3({{following.pk}})" class='btn purple'>Follow</button>
+						{% endif%}
+					</div>
+		</div>
+		{% endfor%}
+					
+				</div>
+
+			</form>
+			
+		</div>
+	</div>
+</div>
+<!-- end pop up 3-->
+
+
+
+
+<script type="text/javascript">
+	function showhide() 
+        {  
+            var div = document.getElementById("posts");  
+            if (div.style.display !== "none") {  
+                div.style.display = "none";  
+            }  
+            else {  
+                div.style.display = "block";  
+            }  
+        }  
+       
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- follow script -->
+<script type="text/javascript">
+	function follow(pk)
+	{
+		$.ajax({
+			type: 'GET',
+			url: "{% url 'Social:follow'%}",
+			data:{'profilepk':pk},
+			success:function(response){
+
+				var x = document.getElementById("fbutton");
+				if (x.innerHTML === "Follow") 
+				{
+				x.innerHTML = "Following";
+				}
+				else {
+				    x.innerHTML = "Follow";
+				  }
+				
+				 
+			}
+			
+			,
+			error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+
+		});
+
+	}
+
+	function follow2(pk)
+	{
+		$.ajax({
+			type: 'GET',
+			url: "{% url 'Social:follow'%}",
+			data:{'profilepk':pk},
+			success:function(response){
+
+				
+				 var y = document.getElementById("f2button");
+				if (y.innerHTML === "Follow") 
+				{
+				y.innerHTML = "Following";
+				}
+				else {
+				    y.innerHTML = "Follow";
+				  }
+				 
+			}
+			
+			,
+			error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+
+		});
+
+	}
+
+
+	function follow3(pk)
+	{
+		$.ajax({
+			type: 'GET',
+			url: "{% url 'Social:follow'%}",
+			data:{'profilepk':pk},
+			success:function(response){
+
+				
+				 var z = document.getElementById("f3button");
+				if (z.innerHTML === "Follow") 
+				{
+				z.innerHTML = "Following";
+				}
+				else {
+				    z.innerHTML = "Follow";
+				  }
+				 
+			}
+			
+			,
+			error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+
+		});
+
+	}
+</script>
+<!-- end follow script -->
+
+
+{% endblock %}
